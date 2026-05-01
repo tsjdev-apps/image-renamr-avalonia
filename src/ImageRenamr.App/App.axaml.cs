@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ImageRenamr.App;
 
-public partial class App : Application
+internal sealed partial class App : Application
 {
     /// <summary>
     /// Provides access to the application's dependency injection service provider instance.
