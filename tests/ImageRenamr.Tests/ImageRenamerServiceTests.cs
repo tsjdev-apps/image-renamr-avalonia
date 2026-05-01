@@ -25,7 +25,7 @@ public class ImageRenamerServiceTests
         _ = workspace.CreateInputFile("Ant.JPG", "ant");
         _ = workspace.CreateInputFile("notes.txt", "ignore me");
 
-        ImageRenamerService service = new();
+        ImageRenamrService service = new();
 
         RenameImagesResult result =
             await service.RenameAsync(
@@ -57,7 +57,7 @@ public class ImageRenamerServiceTests
         _ = workspace.CreateInputFile("camera.jpg", "new content");
         _ = workspace.CreateOutputFile("TRIP_01.jpg", "existing content");
 
-        ImageRenamerService service = new();
+        ImageRenamrService service = new();
 
         RenameImagesResult result =
             await service.RenameAsync(
@@ -90,7 +90,7 @@ public class ImageRenamerServiceTests
         _ = workspace.CreateInputFile("camera.jpg", "fresh content");
         _ = workspace.CreateOutputFile("TRIP_01.jpg", "existing content");
 
-        ImageRenamerService service = new();
+        ImageRenamrService service = new();
 
         RenameImagesResult result =
             await service.RenameAsync(
@@ -119,7 +119,7 @@ public class ImageRenamerServiceTests
         using TestWorkspace workspace = new();
         _ = workspace.CreateInputFile("camera.jpg", "content");
 
-        ImageRenamerService service = new();
+        ImageRenamrService service = new();
 
         ArgumentException exception =
             await Assert.ThrowsAsync<ArgumentException>(
@@ -152,7 +152,7 @@ public class ImageRenamerServiceTests
             _ = workspace.CreateInputFile($"image-{index:D3}.jpg", $"content-{index}");
         }
 
-        ImageRenamerService service = new();
+        ImageRenamrService service = new();
 
         RenameImagesResult result =
             await service.RenameAsync(
@@ -179,7 +179,7 @@ public class ImageRenamerServiceTests
         using TestWorkspace workspace = new();
         _ = workspace.CreateInputFile("camera.jpg", "content");
 
-        ImageRenamerService service = new();
+        ImageRenamrService service = new();
 
         RenameImagesResult result =
             await service.RenameAsync(
@@ -205,7 +205,7 @@ public class ImageRenamerServiceTests
         _ = workspace.CreateInputFile("notes.txt", "ignore me");
         RecordingProgress progress = new();
 
-        ImageRenamerService service = new();
+        ImageRenamrService service = new();
 
         RenameImagesResult result =
             await service.RenameAsync(
@@ -235,7 +235,7 @@ public class ImageRenamerServiceTests
         _ = workspace.CreateInputFile("camera.jpg", "content");
         char invalidCharacter = Path.GetInvalidFileNameChars().First(character => character != '\0');
 
-        ImageRenamerService service = new();
+        ImageRenamrService service = new();
 
         ArgumentException exception =
             await Assert.ThrowsAsync<ArgumentException>(
