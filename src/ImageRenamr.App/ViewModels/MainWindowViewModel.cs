@@ -203,7 +203,8 @@ public sealed partial class MainWindowViewModel(
         try
         {
             RenameImagesRequest request = new(InputFolder, OutputFolder, Prefix, OverwriteExisting);
-            RenameImagesResult result = await imageRenamrService.RenameAsync(request, progress);
+            RenameImagesResult result = await Task.Run(
+                () => imageRenamrService.RenameAsync(request, progress));
             Volatile.Write(ref acceptProgressUpdates, 0);
 
             ProgressMaximum = Math.Max(1, result.TotalFiles);

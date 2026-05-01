@@ -91,6 +91,67 @@ public class MainWindowViewModelTests
         Assert.Equal("Rename operation completed successfully.", viewModel.StatusMessage);
     }
 
+    /// <summary>
+    /// Verifies that the view model offloads the rename operation from the caller thread
+    /// while still applying progress updates through the captured synchronization context.
+    /// </summary>
+    [Fact]
+    public void StartCommandOffloadsRenameWorkAndMarshalsProgressUpdates()
+    {
+        using PumpingSynchronizationContext synchronizationContext = new();
+        int callerThreadId = 0;
+        int serviceThreadId = 0;
+        int progressUpdateThreadId = 0;
+
+        synchronizationContext.Run(async () =>
+        {
+            callerThreadId = Environment.CurrentManagedThreadId;
+
+            StubImageRenamrService service = new()
+            {
+                Handler = (request, progress, _) =>
+                {
+                    serviceThreadId = Environment.CurrentManagedThreadId;
+                    progress?.Report(new RenameProgressUpdate(1, 1, $"Copied '{request.Prefix}_01.jpg' from 'source.jpg'."));
+
+                    return Task.FromResult(
+                        new RenameImagesResult(
+                            TotalFiles: 1,
+                            CopiedFiles: 1,
+                            SkippedFiles: 0,
+                            OutputFiles: [Path.Combine(request.OutputFolder, $"{request.Prefix}_01.jpg")]));
+                }
+            };
+
+            MainWindowViewModel viewModel = new(service)
+            {
+                InputFolder = "source",
+                OutputFolder = "destination",
+                Prefix = "TRIP"
+            };
+
+            viewModel.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(MainWindowViewModel.ProgressValue)
+                    && viewModel.ProgressValue > 0)
+                {
+                    progressUpdateThreadId = Environment.CurrentManagedThreadId;
+                }
+            };
+
+            await viewModel.StartCommand.ExecuteAsync(null);
+
+            Assert.False(viewModel.IsBusy);
+            Assert.Equal(1, viewModel.ProgressValue);
+            Assert.Equal("100%", viewModel.ProgressPercentageText);
+            Assert.Equal("1 copied and 0 skipped.", viewModel.SummaryMessage);
+            Assert.Equal("Rename operation completed successfully.", viewModel.StatusMessage);
+        });
+
+        Assert.NotEqual(callerThreadId, serviceThreadId);
+        Assert.Equal(callerThreadId, progressUpdateThreadId);
+    }
+
     private sealed class StubImageRenamrService : IImageRenamrService
     {
         public RenameImagesRequest? LastRequest { get; private set; }
@@ -105,6 +166,89 @@ public class MainWindowViewModelTests
         {
             LastRequest = request;
             return Handler(request, progress, cancellationToken);
+        }
+    }
+
+    private sealed class PumpingSynchronizationContext : SynchronizationContext, IDisposable
+    {
+        private readonly AutoResetEvent workItemsWaiting = new(initialState: false);
+        private readonly Queue<(SendOrPostCallback Callback, object? State)> workItems = [];
+        private bool completed;
+
+        public void Dispose()
+        {
+            workItemsWaiting.Dispose();
+        }
+
+        public override void Post(SendOrPostCallback callback, object? state)
+        {
+            lock (workItems)
+            {
+                workItems.Enqueue((callback, state));
+            }
+
+            workItemsWaiting.Set();
+        }
+
+        public void Run(Func<Task> action)
+        {
+            SynchronizationContext? previousContext = Current;
+            SetSynchronizationContext(this);
+
+            try
+            {
+                Task task = action();
+
+                _ = task.ContinueWith(
+                    _ =>
+                    {
+                        completed = true;
+                        workItemsWaiting.Set();
+                    },
+                    CancellationToken.None,
+                    TaskContinuationOptions.None,
+                    TaskScheduler.Default);
+
+                while (!completed || HasPendingWork())
+                {
+                    if (TryDequeue(out (SendOrPostCallback Callback, object? State) workItem))
+                    {
+                        workItem.Callback(workItem.State);
+                        continue;
+                    }
+
+                    workItemsWaiting.WaitOne();
+                }
+
+                task.GetAwaiter().GetResult();
+            }
+            finally
+            {
+                SetSynchronizationContext(previousContext);
+            }
+        }
+
+        private bool HasPendingWork()
+        {
+            lock (workItems)
+            {
+                return workItems.Count > 0;
+            }
+        }
+
+        private bool TryDequeue(out (SendOrPostCallback Callback, object? State) workItem)
+        {
+            lock (workItems)
+            {
+                if (workItems.Count > 0)
+                {
+                    workItem = workItems.Dequeue();
+                    return true;
+                }
+            }
+
+            workItem = default;
+            return false;
         }
     }
 }
