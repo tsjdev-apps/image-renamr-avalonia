@@ -1,0 +1,161 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="using:ImageRenamr.App.ViewModels"
+        mc:Ignorable="d"
+        d:DesignWidth="960"
+        d:DesignHeight="550"
+        x:Class="ImageRenamr.App.Views.MainWindow"
+        x:DataType="viewModels:MainWindowViewModel"
+        Width="960"
+        Height="550"
+        MinWidth="960"
+        MinHeight="550"
+        Background="#F5F7FA"
+        CanResize="False"
+        Title="Image Renamr by tsjdev apps"
+        Icon="/Assets/AppIcon.ico">
+
+    <Grid ColumnDefinitions="1.4*,0.9*"
+          ColumnSpacing="24"
+          Margin="12">
+        <Border Classes="card">
+            <StackPanel Spacing="20">
+                <StackPanel Spacing="4">
+                    <TextBlock Classes="heading-large" Text="Batch setup" />
+                    <TextBlock Classes="body-text" Text="Choose the folders, tweak the prefix, and decide how to handle conflicts." />
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock FontWeight="SemiBold" Foreground="#1E293B" Text="Input folder" />
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="6">
+                        <TextBox Grid.Column="0"
+                                 IsReadOnly="True"
+                                 Text="{Binding InputFolder}"
+                                 PlaceholderText="Select the folder that contains your source images" />
+                        <Button Grid.Column="1"
+                                Command="{Binding PickInputFolderCommand}"
+                                IsEnabled="{Binding CanEditInputs}"
+                                MinWidth="50"
+                                ToolTip.Tip="Browse..."
+                                Classes="Primary"
+                                Theme="{StaticResource SolidButton}">
+                            <PathIcon Width="18" Height="18" Data="M3 6H9L11 8H21V19H3Z" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock FontWeight="SemiBold" Foreground="#1E293B" Text="Output folder" />
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="6">
+                        <TextBox Grid.Column="0"
+                                 IsReadOnly="True"
+                                 Text="{Binding OutputFolder}"
+                                 PlaceholderText="Select where the renamed images should be written" />
+                        <Button Grid.Column="1"
+                                Command="{Binding PickOutputFolderCommand}"
+                                IsEnabled="{Binding CanEditInputs}"
+                                MinWidth="50"
+                                ToolTip.Tip="Browse..."
+                                Classes="Primary"
+                                Theme="{StaticResource SolidButton}">
+                            <PathIcon Width="18" Height="18" Data="M3 6H9L11 8H21V19H3Z" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock FontWeight="SemiBold" Foreground="#1E293B" Text="Prefix" />
+                    <TextBox IsReadOnly="{Binding IsBusy}"
+                             Text="{Binding Prefix}"
+                             PlaceholderText="Example: TRIP, SHOOT, HOLIDAY, HAMBURG, ..." />
+                </StackPanel>
+
+                <Border Classes="panel">
+                    <StackPanel Spacing="12">
+                        <CheckBox Content="Overwrite existing files in the output folder"
+                                  IsEnabled="{Binding CanEditInputs}"
+                                  IsChecked="{Binding OverwriteExisting}" />
+                        <TextBlock Foreground="#64748B"
+                                   Text="Leave this unchecked to skip conflicts and keep any files that already exist in the destination folder."
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+
+                <Border Classes="validation" IsVisible="{Binding HasValidationMessage}">
+                    <TextBlock Foreground="#B91C1C"
+                               Text="{Binding ValidationMessage}"
+                               TextWrapping="Wrap" />
+                </Border>
+
+                <Button Classes="Primary"
+                        Theme="{StaticResource SolidButton}"
+                        Command="{Binding StartCommand}"
+                        Content="{Binding StartButtonText}"
+                        HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Border>
+
+        <Grid RowDefinitions="Auto,*,Auto"
+              Grid.Column="1"
+              RowSpacing="24">
+            <Border Grid.Row="0"
+                    Classes="card">
+                <StackPanel Spacing="18">
+                    <StackPanel>
+                        <TextBlock Classes="heading-medium" Text="Live progress" />
+                    </StackPanel>
+
+                    <Border Classes="info">
+                        <StackPanel Spacing="12">
+                            <TextBlock FontWeight="SemiBold" Classes="accent" Text="{Binding ProgressSummary}" />
+                            <ProgressBar Height="12"
+                                         Foreground="#1800AD"
+                                         Maximum="{Binding ProgressMaximum}"
+                                         Value="{Binding ProgressValue}" />
+                            <TextBlock Foreground="#1800AD"
+                                       Text="{Binding ProgressPercentageText}" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Classes="panel">
+                        <StackPanel Spacing="8">
+                            <TextBlock FontWeight="SemiBold"
+                                       Foreground="#0F172A"
+                                       Text="Latest activity" />
+                            <TextBlock Foreground="#475569"
+                                       Text="{Binding LatestActivityMessage}"
+                                       MinHeight="40"
+                                       MaxHeight="40"
+                                       MaxLines="2"
+                                       TextWrapping="Wrap"
+                                       TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="2"
+                    Classes="card">
+                <StackPanel Spacing="12">
+                    <TextBlock Classes="heading-medium" Text="Supported formats" />
+                    <WrapPanel>
+                        <Border Classes="tag"><TextBlock Text=".jpg" /></Border>
+                        <Border Classes="tag"><TextBlock Text=".jpeg" /></Border>
+                        <Border Classes="tag"><TextBlock Text=".png" /></Border>
+                        <Border Classes="tag"><TextBlock Text=".gif" /></Border>
+                        <Border Classes="tag"><TextBlock Text=".bmp" /></Border>
+                        <Border Classes="tag"><TextBlock Text=".tif" /></Border>
+                        <Border Classes="tag"><TextBlock Text=".tiff" /></Border>
+                        <Border Classes="tag"><TextBlock Text=".webp" /></Border>
+                        <Border Classes="tag"><TextBlock Text=".avif" /></Border>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+
+</Window>
