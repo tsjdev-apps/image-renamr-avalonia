@@ -4,7 +4,9 @@ using ImageRenamr.Core.Services;
 namespace ImageRenamr.Tests;
 
 /// <summary>
-/// Contains unit tests for the ImageRenamrService class, verifying the behavior of the RenameAsync method under various
+/// Contains unit tests for the ImageRenamrService class, verifying the behavior
+/// of the RenameAsync method under various scenarios, including file processing,
+/// naming patterns, conflict resolution, and error handling.
 /// </summary>
 public class ImageRenamrServiceTests
 {
