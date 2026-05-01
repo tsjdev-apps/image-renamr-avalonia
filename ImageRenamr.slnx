@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ImageRenamr.App/ImageRenamr.App.csproj" />
+    <Project Path="src/ImageRenamr.Core/ImageRenamr.Core.csproj" Id="00700799-bb58-4258-96b9-3f11d887d2fd" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ImageRenamr.Tests/ImageRenamr.Tests.csproj" Id="8001dba1-124c-4cc4-b53e-47bd5d03bba7" />
+  </Folder>
+</Solution>
