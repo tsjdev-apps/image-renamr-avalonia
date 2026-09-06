@@ -6,6 +6,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <NeutralLanguage>en</NeutralLanguage>
     </PropertyGroup>
 
     <ItemGroup>
