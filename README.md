@@ -1,6 +1,6 @@
 # Image Renamr
 
-Image Renamr is a cross-platform desktop app for renaming entire folders of images without turning the task into a script. Built with Avalonia on .NET, it focuses on a practical batch workflow: choose a source folder, pick an output folder, set a prefix, decide how conflicts should be handled, and export renamed copies with live progress feedback.
+Image Renamr is a cross-platform desktop app for renaming entire folders of images without turning the task into a script. Built with Avalonia on .NET 10, it offers a focused two-panel workflow: configure a batch on the left and follow every processed file in the live progress history on the right.
 
 ![Illustrated header for ImageRenamr](docs/header.jpg)
 
@@ -13,30 +13,35 @@ The project is aimed at everyday image-organization jobs such as preparing trave
 - Use a shared prefix with automatic zero-padded sequence numbers
 - Preserve the original file format of every copied image
 - Skip or overwrite existing files in the output folder
-- Track progress through live status updates and completion summaries
+- Track processed files through a live, scrollable rename history
+- See original and generated file names for every handled image
+- Distinguish renamed, overwritten, skipped, and failed files at a glance
+- Finish every batch with a dedicated summary entry
+- Follow the operating system's light or dark appearance
+- Use the complete interface in English or German, selected from the OS UI language
 - Support `.jpg`, `.jpeg`, `.png`, `.gif`, `.bmp`, `.tif`, `.tiff`, `.webp`, and `.avif`
 
 > Note: the current rename workflow processes files from the selected input folder only. It does not recurse into nested subfolders.
 
 ## Screenshots
 
-### Batch setup
+### Rename configuration
 
 ![ImageRenamr batch setup screen](docs/screenshot-01.png)
 
-The main screen keeps the workflow simple: select an input folder, choose an output folder, enter a prefix, and decide whether existing files should be overwritten.
+The main screen follows the same visual language as Image Sortr. Rename configuration and live progress share the available height, while the start button remains anchored at the bottom of the configuration card.
 
 ### Live progress during a running batch
 
 ![ImageRenamr live progress while renaming images](docs/screenshot-02.png)
 
-While the batch is running, Image Renamr shows overall progress, the latest file activity, and a clear status message so you can see what the app is doing at a glance.
+While a batch is running, Image Renamr updates the processed and total file counts, percentage, and progress bar after each file. The virtualized history keeps the newest result visible while remaining efficient for large folders.
 
 ### Completion summary
 
 ![ImageRenamr completion summary after renaming images](docs/screenshot-03.png)
 
-After the batch finishes, the same workspace shows the final summary, including copied and skipped files, without forcing you into a separate report view.
+Each history row shows a non-color status marker, localized status text, the original file name, and the generated target name where applicable. After processing, a final summary row reports the copied and skipped totals without opening a separate report view.
 
 ## Rename Workflow
 
@@ -44,7 +49,9 @@ After the batch finishes, the same workspace shows the final summary, including 
 2. Choose where the renamed copies should be written.
 3. Enter the prefix that should be used for the generated file names.
 4. Decide whether to skip or overwrite existing output files.
-5. Start the batch and follow the live progress panel.
+5. Start the batch and follow each result in the live progress panel.
+
+Starting another batch clears the previous progress values and rename history. Existing targets are either skipped or overwritten according to the selected option; file-system or permission failures remain visible in the history before the batch stops.
 
 ## Supported Formats
 
@@ -61,6 +68,17 @@ Image Renamr currently accepts the following input file types:
 - `.avif`
 
 Renamed output files keep the original file extension and are written as copies into the selected output folder.
+
+## Localization and Themes
+
+Image Renamr uses standard .NET resources with English as the neutral fallback language:
+
+- English: `src/ImageRenamr.App/Resources/Localization/Strings.resx`
+- German: `src/ImageRenamr.App/Resources/Localization/Strings.de.resx`
+
+The application reads `CultureInfo.CurrentUICulture` at startup. German regional cultures such as `de-DE`, `de-AT`, and `de-CH` use the German interface; unsupported UI cultures fall back to English.
+
+The Avalonia theme follows the operating system's light or dark preference. Image Renamr retains its purple `#1800AD` accent color in both variants.
 
 ## Getting Started
 
@@ -96,15 +114,15 @@ There is no separate lint command. Repository analyzers and code-style checks ru
 
 ## Project Structure
 
-- `src/ImageRenamr.App`: Avalonia desktop UI shell
-- `src/ImageRenamr.Core`: rename pipeline, models, and file-handling logic
-- `tests/ImageRenamr.Tests`: xUnit tests for the rename service and the window view model
+- `src/ImageRenamr.App`: Avalonia desktop UI, localization resources, and MVVM presentation state
+- `src/ImageRenamr.Core`: rename pipeline, structured progress models, validation, and file handling
+- `tests/ImageRenamr.Tests`: xUnit tests for the rename service, progress history, and localization
 
 The solution intentionally keeps the UI thin. Avalonia-specific code lives in the app project, while the rename workflow, validation, file handling, and progress reporting live in the core library.
 
 ## Tech Stack
 
-- [.NET](https://dotnet.microsoft.com/)
+- [.NET 10](https://dotnet.microsoft.com/)
 - [Avalonia UI](https://avaloniaui.net/)
 - [Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia)
 - [CommunityToolkit.Mvvm](https://learn.microsoft.com/dotnet/communitytoolkit/mvvm/)
@@ -112,7 +130,7 @@ The solution intentionally keeps the UI thin. Avalonia-specific code lives in th
 
 ## Quality
 
-The repository includes automated coverage for both the batch rename service and the window view model. Tests verify deterministic ordering, file handling, overwrite rules, prefix validation, progress reporting, and completion-state behavior.
+The repository includes automated coverage for the batch rename service, window view model, structured history entries, and localization resources. Tests verify deterministic ordering, file handling, overwrite rules, prefix validation, percentage calculation, reset and summary behavior, UI-thread progress marshaling, German regional cultures, singular/plural formatting, and English fallback.
 
 ## License
 

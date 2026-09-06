@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="App_Title" xml:space="preserve"><value>Image Renamr by tsjdev apps</value></data>
+  <data name="BatchSetup_Title" xml:space="preserve"><value>Image Renamr</value></data>
+  <data name="BatchSetup_Description" xml:space="preserve"><value>Choose the folders, set a prefix, and decide how to handle conflicts.</value></data>
+  <data name="InputFolder_Label" xml:space="preserve"><value>Source folder</value></data>
+  <data name="InputFolder_Placeholder" xml:space="preserve"><value>Select the folder that contains your source images</value></data>
+  <data name="InputFolder_PickerTitle" xml:space="preserve"><value>Choose the source folder</value></data>
+  <data name="OutputFolder_Label" xml:space="preserve"><value>Output folder</value></data>
+  <data name="OutputFolder_Placeholder" xml:space="preserve"><value>Select where the renamed images should be written</value></data>
+  <data name="OutputFolder_PickerTitle" xml:space="preserve"><value>Choose the output folder</value></data>
+  <data name="Browse_ToolTip" xml:space="preserve"><value>Browse…</value></data>
+  <data name="Prefix_Label" xml:space="preserve"><value>Prefix</value></data>
+  <data name="Prefix_Placeholder" xml:space="preserve"><value>Example: TRIP, SHOOT, HOLIDAY, HAMBURG, …</value></data>
+  <data name="Overwrite_Label" xml:space="preserve"><value>Overwrite existing files in the output folder</value></data>
+  <data name="Overwrite_Description" xml:space="preserve"><value>Leave this unchecked to skip conflicts and keep files that already exist in the destination folder.</value></data>
+  <data name="RenameImages_Button" xml:space="preserve"><value>Rename images</value></data>
+  <data name="RenamingImages_Button" xml:space="preserve"><value>Renaming images…</value></data>
+  <data name="Progress_Title" xml:space="preserve"><value>Live progress</value></data>
+  <data name="Progress_OverallTitle" xml:space="preserve"><value>Overall rename progress</value></data>
+  <data name="Progress_HistoryTitle" xml:space="preserve"><value>Rename history</value></data>
+  <data name="Progress_NoFiles" xml:space="preserve"><value>No files have been processed yet.</value></data>
+  <data name="Progress_ProcessedFiles" xml:space="preserve"><value>{0} / {1} files processed</value></data>
+  <data name="Progress_ProcessedFile" xml:space="preserve"><value>{0} / {1} file processed</value></data>
+  <data name="Status_Ready" xml:space="preserve"><value>Choose your folders, enter a prefix, and start the batch.</value></data>
+  <data name="Status_Preparing" xml:space="preserve"><value>Preparing the rename operation.</value></data>
+  <data name="Status_Scanning" xml:space="preserve"><value>Scanning the selected folder for supported image files.</value></data>
+  <data name="Status_NoImages" xml:space="preserve"><value>The source folder did not contain any supported image files.</value></data>
+  <data name="Status_Completed" xml:space="preserve"><value>Rename operation completed successfully.</value></data>
+  <data name="Summary_Validating" xml:space="preserve"><value>Validating your folders and prefix.</value></data>
+  <data name="Summary_NoImages" xml:space="preserve"><value>Nothing was copied because no supported images were found.</value></data>
+  <data name="Summary_Completed" xml:space="preserve"><value>{0} copied and {1} skipped.</value></data>
+  <data name="Summary_BatchFailed" xml:space="preserve"><value>The batch could not be completed.</value></data>
+  <data name="RenameStatus_Renamed" xml:space="preserve"><value>Renamed</value></data>
+  <data name="RenameStatus_Overwritten" xml:space="preserve"><value>Overwritten</value></data>
+  <data name="RenameStatus_Skipped" xml:space="preserve"><value>Skipped</value></data>
+  <data name="RenameStatus_Failed" xml:space="preserve"><value>Failed</value></data>
+  <data name="RenameStatus_Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="RenameHistory_CompletedTitle" xml:space="preserve"><value>Rename completed</value></data>
+  <data name="RenameHistory_NoFilesTitle" xml:space="preserve"><value>No images found</value></data>
+  <data name="RenameHistory_FailedTitle" xml:space="preserve"><value>Rename interrupted</value></data>
+  <data name="RenameHistory_NewName" xml:space="preserve"><value>→ {0}</value></data>
+  <data name="RenameError_TargetExists" xml:space="preserve"><value>Target file “{0}” already exists.</value></data>
+  <data name="RenameError_TargetExistsShort" xml:space="preserve"><value>Target file already exists.</value></data>
+  <data name="RenameError_FileSystem" xml:space="preserve"><value>The file could not be copied because of a file-system error.</value></data>
+  <data name="RenameError_AccessDenied" xml:space="preserve"><value>The app does not have permission to copy this file.</value></data>
+  <data name="Validation_ReviewInput" xml:space="preserve"><value>Please review the folders and prefix, then try again.</value></data>
+  <data name="Validation_FoldersRequired" xml:space="preserve"><value>Both the source and output folders are required.</value></data>
+  <data name="Validation_FoldersMustDiffer" xml:space="preserve"><value>Choose different source and output folders to keep the originals safe and avoid name collisions.</value></data>
+  <data name="Validation_PrefixRequired" xml:space="preserve"><value>Enter a prefix before starting the rename operation.</value></data>
+  <data name="Validation_PrefixInvalid" xml:space="preserve"><value>The prefix contains characters that are not valid in file names.</value></data>
+  <data name="Validation_InputMissing" xml:space="preserve"><value>The source folder could not be found.</value></data>
+  <data name="Validation_FileSystem" xml:space="preserve"><value>A file-system error interrupted the rename operation.</value></data>
+  <data name="Validation_AccessDenied" xml:space="preserve"><value>The app does not have permission to access one of the selected folders.</value></data>
+</root>

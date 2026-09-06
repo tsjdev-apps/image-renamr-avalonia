@@ -1,11 +1,16 @@
+using System.Collections.Specialized;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
+using ImageRenamr.App.Resources.Localization;
 using ImageRenamr.App.ViewModels;
 
 namespace ImageRenamr.App.Views;
 
 public partial class MainWindow : Window
 {
+    private MainWindowViewModel? subscribedViewModel;
+
     /// <summary>
     /// Initializes a new instance of the MainWindow class.
     /// </summary>
@@ -36,7 +41,7 @@ public partial class MainWindow : Window
                 new FolderPickerOpenOptions
                 {
                     AllowMultiple = false,
-                    Title = "Choose the input folder"
+                    Title = Strings.InputFolder_PickerTitle
                 });
 
             return folders.Count > 0 ? folders[0].TryGetLocalPath() ?? string.Empty : string.Empty;
@@ -48,10 +53,42 @@ public partial class MainWindow : Window
                 new FolderPickerOpenOptions
                 {
                     AllowMultiple = false,
-                    Title = "Choose the output folder"
+                    Title = Strings.OutputFolder_PickerTitle
                 });
 
             return folders.Count > 0 ? folders[0].TryGetLocalPath() ?? string.Empty : string.Empty;
         };
+    }
+
+    /// <inheritdoc/>
+    protected override void OnDataContextChanged(EventArgs e)
+    {
+        if (subscribedViewModel is not null)
+        {
+            subscribedViewModel.RenameHistory.CollectionChanged -= RenameHistoryOnCollectionChanged;
+        }
+
+        base.OnDataContextChanged(e);
+
+        subscribedViewModel = DataContext as MainWindowViewModel;
+        if (subscribedViewModel is not null)
+        {
+            subscribedViewModel.RenameHistory.CollectionChanged += RenameHistoryOnCollectionChanged;
+        }
+    }
+
+    private void RenameHistoryOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action != NotifyCollectionChangedAction.Add
+            || subscribedViewModel is not { IsBusy: true }
+            || subscribedViewModel.RenameHistory.Count == 0)
+        {
+            return;
+        }
+
+        RenameEntry newestEntry = subscribedViewModel.RenameHistory[^1];
+        Dispatcher.UIThread.Post(
+            () => RenameHistoryList.ScrollIntoView(newestEntry),
+            DispatcherPriority.Background);
     }
 }

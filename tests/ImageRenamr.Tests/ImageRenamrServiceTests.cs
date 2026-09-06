@@ -223,7 +223,7 @@ public class ImageRenamrServiceTests
         Assert.Equal(0, result.CopiedFiles);
         Assert.Equal(0, result.SkippedFiles);
         Assert.Empty(result.OutputFiles);
-        Assert.Contains(progress.Messages, message => message.Contains("No supported image files", StringComparison.Ordinal));
+        Assert.Contains(progress.Updates, update => update.Status == RenameProgressStatus.NoFiles);
     }
 
     /// <summary>
@@ -254,11 +254,11 @@ public class ImageRenamrServiceTests
 
     private sealed class RecordingProgress : IProgress<RenameProgressUpdate>
     {
-        public List<string> Messages { get; } = [];
+        public List<RenameProgressUpdate> Updates { get; } = [];
 
         public void Report(RenameProgressUpdate value)
         {
-            Messages.Add(value.Message);
+            Updates.Add(value);
         }
     }
 
