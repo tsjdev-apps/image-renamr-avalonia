@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="App_Title" xml:space="preserve"><value>Image Renamr by tsjdev apps</value></data>
+  <data name="BatchSetup_Title" xml:space="preserve"><value>Image Renamr</value></data>
+  <data name="BatchSetup_Description" xml:space="preserve"><value>Wähle die Ordner und ein Präfix aus und lege fest, wie Konflikte behandelt werden.</value></data>
+  <data name="InputFolder_Label" xml:space="preserve"><value>Quellordner</value></data>
+  <data name="InputFolder_Placeholder" xml:space="preserve"><value>Wähle den Ordner mit deinen Quellbildern aus</value></data>
+  <data name="InputFolder_PickerTitle" xml:space="preserve"><value>Quellordner auswählen</value></data>
+  <data name="OutputFolder_Label" xml:space="preserve"><value>Ausgabeordner</value></data>
+  <data name="OutputFolder_Placeholder" xml:space="preserve"><value>Wähle den Ordner für die umbenannten Bilder aus</value></data>
+  <data name="OutputFolder_PickerTitle" xml:space="preserve"><value>Ausgabeordner auswählen</value></data>
+  <data name="Browse_ToolTip" xml:space="preserve"><value>Durchsuchen…</value></data>
+  <data name="Prefix_Label" xml:space="preserve"><value>Präfix</value></data>
+  <data name="Prefix_Placeholder" xml:space="preserve"><value>Beispiel: REISE, SHOOTING, URLAUB, HAMBURG, …</value></data>
+  <data name="Overwrite_Label" xml:space="preserve"><value>Vorhandene Dateien im Ausgabeordner überschreiben</value></data>
+  <data name="Overwrite_Description" xml:space="preserve"><value>Ist diese Option deaktiviert, werden Konflikte übersprungen und vorhandene Dateien im Zielordner beibehalten.</value></data>
+  <data name="RenameImages_Button" xml:space="preserve"><value>Bilder umbenennen</value></data>
+  <data name="RenamingImages_Button" xml:space="preserve"><value>Bilder werden umbenannt…</value></data>
+  <data name="Progress_Title" xml:space="preserve"><value>Fortschritt</value></data>
+  <data name="Progress_OverallTitle" xml:space="preserve"><value>Gesamtfortschritt</value></data>
+  <data name="Progress_HistoryTitle" xml:space="preserve"><value>Verlauf</value></data>
+  <data name="Progress_NoFiles" xml:space="preserve"><value>Es wurden noch keine Dateien verarbeitet.</value></data>
+  <data name="Progress_ProcessedFiles" xml:space="preserve"><value>{0} / {1} Dateien verarbeitet</value></data>
+  <data name="Progress_ProcessedFile" xml:space="preserve"><value>{0} / {1} Datei verarbeitet</value></data>
+  <data name="Status_Ready" xml:space="preserve"><value>Wähle die Ordner aus, gib ein Präfix ein und starte die Verarbeitung.</value></data>
+  <data name="Status_Preparing" xml:space="preserve"><value>Die Umbenennung wird vorbereitet.</value></data>
+  <data name="Status_Scanning" xml:space="preserve"><value>Der ausgewählte Ordner wird nach unterstützten Bilddateien durchsucht.</value></data>
+  <data name="Status_NoImages" xml:space="preserve"><value>Der Quellordner enthält keine unterstützten Bilddateien.</value></data>
+  <data name="Status_Completed" xml:space="preserve"><value>Die Umbenennung wurde erfolgreich abgeschlossen.</value></data>
+  <data name="Summary_Validating" xml:space="preserve"><value>Ordner und Präfix werden geprüft.</value></data>
+  <data name="Summary_NoImages" xml:space="preserve"><value>Es wurde nichts kopiert, da keine unterstützten Bilder gefunden wurden.</value></data>
+  <data name="Summary_Completed" xml:space="preserve"><value>{0} kopiert und {1} übersprungen.</value></data>
+  <data name="Summary_BatchFailed" xml:space="preserve"><value>Die Verarbeitung konnte nicht abgeschlossen werden.</value></data>
+  <data name="RenameStatus_Renamed" xml:space="preserve"><value>Umbenannt</value></data>
+  <data name="RenameStatus_Overwritten" xml:space="preserve"><value>Überschrieben</value></data>
+  <data name="RenameStatus_Skipped" xml:space="preserve"><value>Übersprungen</value></data>
+  <data name="RenameStatus_Failed" xml:space="preserve"><value>Fehlgeschlagen</value></data>
+  <data name="RenameStatus_Completed" xml:space="preserve"><value>Abgeschlossen</value></data>
+  <data name="RenameHistory_CompletedTitle" xml:space="preserve"><value>Umbenennung abgeschlossen</value></data>
+  <data name="RenameHistory_NoFilesTitle" xml:space="preserve"><value>Keine Bilder gefunden</value></data>
+  <data name="RenameHistory_FailedTitle" xml:space="preserve"><value>Umbenennung abgebrochen</value></data>
+  <data name="RenameHistory_NewName" xml:space="preserve"><value>→ {0}</value></data>
+  <data name="RenameError_TargetExists" xml:space="preserve"><value>Die Zieldatei „{0}“ ist bereits vorhanden.</value></data>
+  <data name="RenameError_TargetExistsShort" xml:space="preserve"><value>Die Zieldatei ist bereits vorhanden.</value></data>
+  <data name="RenameError_FileSystem" xml:space="preserve"><value>Die Datei konnte aufgrund eines Dateisystemfehlers nicht kopiert werden.</value></data>
+  <data name="RenameError_AccessDenied" xml:space="preserve"><value>Die App hat keine Berechtigung zum Kopieren dieser Datei.</value></data>
+  <data name="Validation_ReviewInput" xml:space="preserve"><value>Überprüfe die Ordner und das Präfix und versuche es erneut.</value></data>
+  <data name="Validation_FoldersRequired" xml:space="preserve"><value>Quell- und Ausgabeordner sind erforderlich.</value></data>
+  <data name="Validation_FoldersMustDiffer" xml:space="preserve"><value>Wähle unterschiedliche Quell- und Ausgabeordner aus, um die Originale zu schützen und Namenskonflikte zu vermeiden.</value></data>
+  <data name="Validation_PrefixRequired" xml:space="preserve"><value>Gib vor dem Start der Umbenennung ein Präfix ein.</value></data>
+  <data name="Validation_PrefixInvalid" xml:space="preserve"><value>Das Präfix enthält Zeichen, die in Dateinamen nicht zulässig sind.</value></data>
+  <data name="Validation_InputMissing" xml:space="preserve"><value>Der Quellordner wurde nicht gefunden.</value></data>
+  <data name="Validation_FileSystem" xml:space="preserve"><value>Ein Dateisystemfehler hat die Umbenennung unterbrochen.</value></data>
+  <data name="Validation_AccessDenied" xml:space="preserve"><value>Die App hat keine Berechtigung für einen der ausgewählten Ordner.</value></data>
+</root>

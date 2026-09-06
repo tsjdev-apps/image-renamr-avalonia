@@ -1,152 +1,148 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="ImageRenamr.App.App"
+             xmlns:localization="using:ImageRenamr.App.Resources.Localization"
              xmlns:semi="https://irihi.tech/semi"
-             RequestedThemeVariant="Light">
+             x:Class="ImageRenamr.App.App"
+             RequestedThemeVariant="Default">
 
     <Application.Resources>
-        <Color x:Key="AccentColor">#1800AD</Color>
-        <SolidColorBrush x:Key="AccentBrush" Color="#1800AD" />
-        <SolidColorBrush x:Key="AccentPointeroverBrush" Color="#140091" />
-        <SolidColorBrush x:Key="AccentPressedBrush" Color="#100075" />
-        <SolidColorBrush x:Key="AccentDisabledBrush" Color="#D7D2FF" />
+        <ResourceDictionary>
+            <Color x:Key="AccentColor">#1800AD</Color>
+            <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+            <SolidColorBrush x:Key="AccentPointeroverBrush" Color="#140091" />
+            <SolidColorBrush x:Key="AccentPressedBrush" Color="#100075" />
+            <SolidColorBrush x:Key="AccentDisabledBrush" Color="#D7D2FF" />
+            <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF" />
 
-        <SolidColorBrush x:Key="ButtonSolidPrimaryBackground" Color="#1800AD" />
-        <SolidColorBrush x:Key="ButtonSolidPrimaryBorderBrush" Color="#1800AD" />
-        <SolidColorBrush x:Key="ButtonSolidPrimaryPointeroverBackground" Color="#140091" />
-        <SolidColorBrush x:Key="ButtonSolidPrimaryPointeroverBorderBrush" Color="#140091" />
-        <SolidColorBrush x:Key="ButtonSolidPrimaryPressedBackground" Color="#100075" />
-        <SolidColorBrush x:Key="ButtonSolidPrimaryPressedBorderBrush" Color="#100075" />
+            <SolidColorBrush x:Key="ButtonSolidPrimaryBackground" Color="{StaticResource AccentColor}" />
+            <SolidColorBrush x:Key="ButtonSolidPrimaryBorderBrush" Color="{StaticResource AccentColor}" />
+            <SolidColorBrush x:Key="ButtonSolidPrimaryPointeroverBackground" Color="#140091" />
+            <SolidColorBrush x:Key="ButtonSolidPrimaryPointeroverBorderBrush" Color="#140091" />
+            <SolidColorBrush x:Key="ButtonSolidPrimaryPressedBackground" Color="#100075" />
+            <SolidColorBrush x:Key="ButtonSolidPrimaryPressedBorderBrush" Color="#100075" />
 
-        <SolidColorBrush x:Key="CheckBoxCheckedDefaultBackground" Color="#1800AD" />
-        <SolidColorBrush x:Key="CheckBoxCheckedDefaultBorderBrush" Color="#1800AD" />
-        <SolidColorBrush x:Key="CheckBoxCheckedDisabledBackground" Color="#D7D2FF" />
-        <SolidColorBrush x:Key="CheckBoxCheckedDisabledBorderBrush" Color="#D7D2FF" />
-        <SolidColorBrush x:Key="CheckBoxCheckedPointeroverBackground" Color="#140091" />
-        <SolidColorBrush x:Key="CheckBoxCheckedPointeroverBorderBrush" Color="#140091" />
-        <SolidColorBrush x:Key="CheckBoxCheckedPressedBackground" Color="#100075" />
-        <SolidColorBrush x:Key="CheckBoxCheckedPressedBorderBrush" Color="#100075" />
-        <SolidColorBrush x:Key="CheckBoxPointeroverBorderBrush" Color="#140091" />
-        <SolidColorBrush x:Key="CheckBoxPressedBorderBrush" Color="#100075" />
+            <SolidColorBrush x:Key="CheckBoxCheckedDefaultBackground" Color="{StaticResource AccentColor}" />
+            <SolidColorBrush x:Key="CheckBoxCheckedDefaultBorderBrush" Color="{StaticResource AccentColor}" />
+            <SolidColorBrush x:Key="CheckBoxCheckedDisabledBackground" Color="#D7D2FF" />
+            <SolidColorBrush x:Key="CheckBoxCheckedDisabledBorderBrush" Color="#D7D2FF" />
+            <SolidColorBrush x:Key="CheckBoxCheckedPointeroverBackground" Color="#140091" />
+            <SolidColorBrush x:Key="CheckBoxCheckedPointeroverBorderBrush" Color="#140091" />
+            <SolidColorBrush x:Key="CheckBoxCheckedPressedBackground" Color="#100075" />
+            <SolidColorBrush x:Key="CheckBoxCheckedPressedBorderBrush" Color="#100075" />
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#F5F7FA" />
+                    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="SurfaceBackgroundBrush" Color="#F8FAFC" />
+                    <SolidColorBrush x:Key="SurfaceBorderBrush" Color="#E2E8F0" />
+                    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#0F172A" />
+                    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#475569" />
+                    <SolidColorBrush x:Key="InfoBackgroundBrush" Color="#ECEAFF" />
+                    <SolidColorBrush x:Key="ValidationBackgroundBrush" Color="#FEF2F2" />
+                    <SolidColorBrush x:Key="ValidationBorderBrush" Color="#FCA5A5" />
+                    <SolidColorBrush x:Key="ValidationTextBrush" Color="#B91C1C" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#111827" />
+                    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#1F2937" />
+                    <SolidColorBrush x:Key="SurfaceBackgroundBrush" Color="#273449" />
+                    <SolidColorBrush x:Key="SurfaceBorderBrush" Color="#475569" />
+                    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#F8FAFC" />
+                    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#CBD5E1" />
+                    <SolidColorBrush x:Key="InfoBackgroundBrush" Color="#211B55" />
+                    <SolidColorBrush x:Key="ValidationBackgroundBrush" Color="#3B151B" />
+                    <SolidColorBrush x:Key="ValidationBorderBrush" Color="#BE123C" />
+                    <SolidColorBrush x:Key="ValidationTextBrush" Color="#FDA4AF" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 
     <Application.Styles>
-        <semi:SemiTheme Locale="en-US" />
+        <semi:SemiTheme Locale="{x:Static localization:Strings.ThemeLocale}" />
 
         <Style Selector="Button.Primary">
-            <Setter Property="Background"
-                    Value="#1800AD" />
-            <Setter Property="BorderBrush"
-                    Value="#1800AD" />
-            <Setter Property="Foreground"
-                    Value="White" />
+            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource OnAccentBrush}" />
         </Style>
 
         <Style Selector="Button.Primary:pointerover">
-            <Setter Property="Background"
-                    Value="#140091" />
-            <Setter Property="BorderBrush"
-                    Value="#140091" />
-            <Setter Property="Foreground"
-                    Value="White" />
+            <Setter Property="Background" Value="{StaticResource AccentPointeroverBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPointeroverBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource OnAccentBrush}" />
         </Style>
 
         <Style Selector="Button.Primary:pressed">
-            <Setter Property="Background"
-                    Value="#100075" />
-            <Setter Property="BorderBrush"
-                    Value="#100075" />
-            <Setter Property="Foreground"
-                    Value="White" />
+            <Setter Property="Background" Value="{StaticResource AccentPressedBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPressedBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource OnAccentBrush}" />
         </Style>
 
-        <!-- Shared application styles using class selectors -->
         <Style Selector="Border.card">
-            <Setter Property="Background"
-                    Value="White" />
-            <Setter Property="BorderBrush"
-                    Value="#E2E8F0" />
-            <Setter Property="BorderThickness"
-                    Value="1" />
-            <Setter Property="CornerRadius"
-                    Value="24" />
-            <Setter Property="Padding"
-                    Value="24" />
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SurfaceBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="24" />
+            <Setter Property="Padding" Value="24" />
         </Style>
 
         <Style Selector="Border.panel">
-            <Setter Property="Background"
-                    Value="#F8FAFC" />
-            <Setter Property="BorderBrush"
-                    Value="#E2E8F0" />
-            <Setter Property="BorderThickness"
-                    Value="1" />
-            <Setter Property="CornerRadius"
-                    Value="20" />
-            <Setter Property="Padding"
-                    Value="16" />
+            <Setter Property="Background" Value="{DynamicResource SurfaceBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SurfaceBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="Padding" Value="16" />
         </Style>
 
         <Style Selector="Border.info">
-            <Setter Property="Background"
-                    Value="#ECEAFF" />
-            <Setter Property="CornerRadius"
-                    Value="18" />
-            <Setter Property="Padding"
-                    Value="16" />
+            <Setter Property="Background" Value="{DynamicResource InfoBackgroundBrush}" />
+            <Setter Property="CornerRadius" Value="18" />
+            <Setter Property="Padding" Value="14" />
         </Style>
 
         <Style Selector="Border.validation">
-            <Setter Property="Background"
-                    Value="#FEF2F2" />
-            <Setter Property="BorderBrush"
-                    Value="#FCA5A5" />
-            <Setter Property="BorderThickness"
-                    Value="1" />
-            <Setter Property="CornerRadius"
-                    Value="14" />
-            <Setter Property="Padding"
-                    Value="12" />
-        </Style>
-
-        <Style Selector="Border.tag">
-            <Setter Property="Background"
-                    Value="#F1F5F9" />
-            <Setter Property="CornerRadius"
-                    Value="14" />
-            <Setter Property="Margin"
-                    Value="0,0,8,8" />
-            <Setter Property="Padding"
-                    Value="12,6" />
+            <Setter Property="Background" Value="{DynamicResource ValidationBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ValidationBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="Padding" Value="12" />
         </Style>
 
         <Style Selector="TextBlock.heading-large">
-            <Setter Property="FontSize"
-                    Value="24" />
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="Foreground"
-                    Value="#0F172A" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
         </Style>
 
         <Style Selector="TextBlock.heading-medium">
-            <Setter Property="FontSize"
-                    Value="22" />
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="Foreground"
-                    Value="#0F172A" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
         </Style>
 
         <Style Selector="TextBlock.body-text">
-            <Setter Property="Foreground"
-                    Value="#475569" />
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}" />
+        </Style>
+
+        <Style Selector="TextBlock.primary-text">
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
         </Style>
 
         <Style Selector="TextBlock.accent">
-            <Setter Property="Foreground"
-                    Value="#1800AD" />
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
         </Style>
 
+        <Style Selector="ListBox.processing-history">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <Style Selector="ListBox.processing-history ListBoxItem">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
     </Application.Styles>
 </Application>

@@ -1,161 +1,236 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:localization="using:ImageRenamr.App.Resources.Localization"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="using:ImageRenamr.App.ViewModels"
         mc:Ignorable="d"
-        d:DesignWidth="960"
-        d:DesignHeight="550"
+        d:DesignWidth="1120"
+        d:DesignHeight="680"
         x:Class="ImageRenamr.App.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
-        Width="960"
-        Height="550"
-        MinWidth="960"
-        MinHeight="550"
-        Background="#F5F7FA"
-        CanResize="False"
-        Title="Image Renamr by tsjdev apps"
+        Width="1120"
+        Height="600"
+        MinWidth="1120"
+        MinHeight="600"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        CanResize="True"
+        Title="{x:Static localization:Strings.App_Title}"
         Icon="/Assets/AppIcon.ico">
 
-    <Grid ColumnDefinitions="1.4*,0.9*"
+    <Grid ColumnDefinitions="1.4*,1*"
           ColumnSpacing="24"
           Margin="12">
         <Border Classes="card">
-            <StackPanel Spacing="20">
-                <StackPanel Spacing="4">
-                    <TextBlock Classes="heading-large" Text="Batch setup" />
-                    <TextBlock Classes="body-text" Text="Choose the folders, tweak the prefix, and decide how to handle conflicts." />
-                </StackPanel>
+            <Grid RowDefinitions="*,Auto" RowSpacing="12">
+                <ScrollViewer Grid.Row="0"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,0,4,0" Spacing="18">
+                        <StackPanel Spacing="4">
+                            <TextBlock Classes="heading-large"
+                                       Text="{x:Static localization:Strings.BatchSetup_Title}" />
+                            <TextBlock Classes="body-text"
+                                       Text="{x:Static localization:Strings.BatchSetup_Description}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
 
-                <StackPanel Spacing="8">
-                    <TextBlock FontWeight="SemiBold" Foreground="#1E293B" Text="Input folder" />
-                    <Grid ColumnDefinitions="*,Auto"
-                          ColumnSpacing="6">
-                        <TextBox Grid.Column="0"
-                                 IsReadOnly="True"
-                                 Text="{Binding InputFolder}"
-                                 PlaceholderText="Select the folder that contains your source images" />
-                        <Button Grid.Column="1"
-                                Command="{Binding PickInputFolderCommand}"
-                                IsEnabled="{Binding CanEditInputs}"
-                                MinWidth="50"
-                                ToolTip.Tip="Browse..."
-                                Classes="Primary"
-                                Theme="{StaticResource SolidButton}">
-                            <PathIcon Width="18" Height="18" Data="M3 6H9L11 8H21V19H3Z" />
-                        </Button>
-                    </Grid>
-                </StackPanel>
+                        <StackPanel Spacing="8">
+                            <TextBlock Classes="primary-text"
+                                       FontWeight="SemiBold"
+                                       Text="{x:Static localization:Strings.InputFolder_Label}" />
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                                <TextBox Grid.Column="0"
+                                         IsEnabled="{Binding CanEditInputs}"
+                                         IsReadOnly="True"
+                                         PlaceholderText="{x:Static localization:Strings.InputFolder_Placeholder}"
+                                         Text="{Binding InputFolder}" />
+                                <Button Grid.Column="1"
+                                        Classes="Primary"
+                                        Command="{Binding PickInputFolderCommand}"
+                                        IsEnabled="{Binding CanEditInputs}"
+                                        MinWidth="50"
+                                        Theme="{StaticResource SolidButton}"
+                                        ToolTip.Tip="{x:Static localization:Strings.Browse_ToolTip}">
+                                    <PathIcon Width="18" Height="18" Data="M3 6H9L11 8H21V19H3Z" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
 
-                <StackPanel Spacing="8">
-                    <TextBlock FontWeight="SemiBold" Foreground="#1E293B" Text="Output folder" />
-                    <Grid ColumnDefinitions="*,Auto"
-                          ColumnSpacing="6">
-                        <TextBox Grid.Column="0"
-                                 IsReadOnly="True"
-                                 Text="{Binding OutputFolder}"
-                                 PlaceholderText="Select where the renamed images should be written" />
-                        <Button Grid.Column="1"
-                                Command="{Binding PickOutputFolderCommand}"
-                                IsEnabled="{Binding CanEditInputs}"
-                                MinWidth="50"
-                                ToolTip.Tip="Browse..."
-                                Classes="Primary"
-                                Theme="{StaticResource SolidButton}">
-                            <PathIcon Width="18" Height="18" Data="M3 6H9L11 8H21V19H3Z" />
-                        </Button>
-                    </Grid>
-                </StackPanel>
+                        <StackPanel Spacing="8">
+                            <TextBlock Classes="primary-text"
+                                       FontWeight="SemiBold"
+                                       Text="{x:Static localization:Strings.OutputFolder_Label}" />
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                                <TextBox Grid.Column="0"
+                                         IsEnabled="{Binding CanEditInputs}"
+                                         IsReadOnly="True"
+                                         PlaceholderText="{x:Static localization:Strings.OutputFolder_Placeholder}"
+                                         Text="{Binding OutputFolder}" />
+                                <Button Grid.Column="1"
+                                        Classes="Primary"
+                                        Command="{Binding PickOutputFolderCommand}"
+                                        IsEnabled="{Binding CanEditInputs}"
+                                        MinWidth="50"
+                                        Theme="{StaticResource SolidButton}"
+                                        ToolTip.Tip="{x:Static localization:Strings.Browse_ToolTip}">
+                                    <PathIcon Width="18" Height="18" Data="M3 6H9L11 8H21V19H3Z" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
 
-                <StackPanel Spacing="8">
-                    <TextBlock FontWeight="SemiBold" Foreground="#1E293B" Text="Prefix" />
-                    <TextBox IsReadOnly="{Binding IsBusy}"
-                             Text="{Binding Prefix}"
-                             PlaceholderText="Example: TRIP, SHOOT, HOLIDAY, HAMBURG, ..." />
-                </StackPanel>
+                        <StackPanel Spacing="8">
+                            <TextBlock Classes="primary-text"
+                                       FontWeight="SemiBold"
+                                       Text="{x:Static localization:Strings.Prefix_Label}" />
+                            <TextBox IsEnabled="{Binding CanEditInputs}"
+                                     IsReadOnly="{Binding IsBusy}"
+                                     PlaceholderText="{x:Static localization:Strings.Prefix_Placeholder}"
+                                     Text="{Binding Prefix}" />
+                        </StackPanel>
 
-                <Border Classes="panel">
-                    <StackPanel Spacing="12">
-                        <CheckBox Content="Overwrite existing files in the output folder"
-                                  IsEnabled="{Binding CanEditInputs}"
-                                  IsChecked="{Binding OverwriteExisting}" />
-                        <TextBlock Foreground="#64748B"
-                                   Text="Leave this unchecked to skip conflicts and keep any files that already exist in the destination folder."
-                                   TextWrapping="Wrap" />
+                        <Border Classes="panel">
+                            <StackPanel Spacing="12">
+                                <CheckBox IsChecked="{Binding OverwriteExisting}"
+                                          IsEnabled="{Binding CanEditInputs}">
+                                    <TextBlock Text="{x:Static localization:Strings.Overwrite_Label}"
+                                               TextWrapping="Wrap" />
+                                </CheckBox>
+                                <TextBlock Classes="body-text"
+                                           Text="{x:Static localization:Strings.Overwrite_Description}"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="validation"
+                                IsVisible="{Binding HasValidationMessage}">
+                            <TextBlock Foreground="{DynamicResource ValidationTextBrush}"
+                                       Text="{Binding ValidationMessage}"
+                                       TextWrapping="Wrap" />
+                        </Border>
                     </StackPanel>
-                </Border>
+                </ScrollViewer>
 
-                <Border Classes="validation" IsVisible="{Binding HasValidationMessage}">
-                    <TextBlock Foreground="#B91C1C"
-                               Text="{Binding ValidationMessage}"
-                               TextWrapping="Wrap" />
-                </Border>
-
-                <Button Classes="Primary"
-                        Theme="{StaticResource SolidButton}"
+                <Button Grid.Row="1"
+                        Classes="Primary"
                         Command="{Binding StartCommand}"
                         Content="{Binding StartButtonText}"
-                        HorizontalAlignment="Stretch"/>
-            </StackPanel>
+                        HorizontalAlignment="Stretch"
+                        Margin="0,4,0,0"
+                        Theme="{StaticResource SolidButton}" />
+            </Grid>
         </Border>
 
-        <Grid RowDefinitions="Auto,*,Auto"
-              Grid.Column="1"
-              RowSpacing="24">
-            <Border Grid.Row="0"
-                    Classes="card">
-                <StackPanel Spacing="18">
-                    <StackPanel>
-                        <TextBlock Classes="heading-medium" Text="Live progress" />
-                    </StackPanel>
+        <Border Grid.Column="1" Classes="card">
+            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="14">
+                <TextBlock Classes="heading-medium"
+                           Text="{x:Static localization:Strings.Progress_Title}" />
 
-                    <Border Classes="info">
-                        <StackPanel Spacing="12">
-                            <TextBlock FontWeight="SemiBold" Classes="accent" Text="{Binding ProgressSummary}" />
-                            <ProgressBar Height="12"
-                                         Foreground="#1800AD"
-                                         Maximum="{Binding ProgressMaximum}"
-                                         Value="{Binding ProgressValue}" />
-                            <TextBlock Foreground="#1800AD"
-                                       Text="{Binding ProgressPercentageText}" />
-                        </StackPanel>
-                    </Border>
+                <Border Grid.Row="1" Classes="info">
+                    <Grid RowDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12"
+                          RowSpacing="10">
+                        <TextBlock Classes="accent"
+                                   FontWeight="SemiBold"
+                                   Text="{Binding ProgressSummary}" />
+                        <TextBlock Grid.Column="1"
+                                   Classes="accent"
+                                   FontWeight="SemiBold"
+                                   Text="{Binding ProgressPercentageText}" />
+                        <ProgressBar Grid.Row="1"
+                                     Grid.ColumnSpan="2"
+                                     Height="10"
+                                     Foreground="{StaticResource AccentBrush}"
+                                     Maximum="{Binding ProgressBarMaximum}"
+                                     Value="{Binding ProgressValue}" />
+                    </Grid>
+                </Border>
 
-                    <Border Classes="panel">
-                        <StackPanel Spacing="8">
-                            <TextBlock FontWeight="SemiBold"
-                                       Foreground="#0F172A"
-                                       Text="Latest activity" />
-                            <TextBlock Foreground="#475569"
-                                       Text="{Binding LatestActivityMessage}"
-                                       MinHeight="40"
-                                       MaxHeight="40"
-                                       MaxLines="2"
-                                       TextWrapping="Wrap"
-                                       TextTrimming="CharacterEllipsis" />
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-            </Border>
+                <Grid Grid.Row="2"
+                      RowDefinitions="Auto,*"
+                      RowSpacing="8">
+                    <TextBlock Classes="primary-text"
+                               FontWeight="SemiBold"
+                               Text="{x:Static localization:Strings.Progress_HistoryTitle}" />
 
-            <Border Grid.Row="2"
-                    Classes="card">
-                <StackPanel Spacing="12">
-                    <TextBlock Classes="heading-medium" Text="Supported formats" />
-                    <WrapPanel>
-                        <Border Classes="tag"><TextBlock Text=".jpg" /></Border>
-                        <Border Classes="tag"><TextBlock Text=".jpeg" /></Border>
-                        <Border Classes="tag"><TextBlock Text=".png" /></Border>
-                        <Border Classes="tag"><TextBlock Text=".gif" /></Border>
-                        <Border Classes="tag"><TextBlock Text=".bmp" /></Border>
-                        <Border Classes="tag"><TextBlock Text=".tif" /></Border>
-                        <Border Classes="tag"><TextBlock Text=".tiff" /></Border>
-                        <Border Classes="tag"><TextBlock Text=".webp" /></Border>
-                        <Border Classes="tag"><TextBlock Text=".avif" /></Border>
-                    </WrapPanel>
-                </StackPanel>
-            </Border>
-        </Grid>
+                    <TextBlock Grid.Row="1"
+                               Classes="body-text"
+                               HorizontalAlignment="Center"
+                               IsVisible="{Binding IsHistoryEmpty}"
+                               Text="{x:Static localization:Strings.Progress_NoFiles}"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center" />
+
+                    <ListBox x:Name="RenameHistoryList"
+                             Grid.Row="1"
+                             Classes="processing-history"
+                             IsVisible="{Binding HasRenameHistory}"
+                             ItemsSource="{Binding RenameHistory}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="viewModels:RenameEntry">
+                                <Border BorderBrush="{DynamicResource SurfaceBorderBrush}"
+                                        BorderThickness="0,0,0,1"
+                                        Padding="4,9">
+                                    <Grid ColumnDefinitions="24,*"
+                                          RowDefinitions="Auto,Auto,Auto"
+                                          RowSpacing="3">
+                                        <TextBlock Grid.RowSpan="3"
+                                                   Classes="accent"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Text="{Binding StatusIcon}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Classes="primary-text"
+                                                   FontWeight="SemiBold"
+                                                   Text="{Binding FileName}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   ToolTip.Tip="{Binding FileName}" />
+                                        <Grid Grid.Row="1"
+                                              Grid.Column="1"
+                                              ColumnDefinitions="Auto,*"
+                                              ColumnSpacing="8">
+                                            <TextBlock Classes="body-text"
+                                                       FontSize="12"
+                                                       Text="{Binding StatusText}" />
+                                            <TextBlock Grid.Column="1"
+                                                       Classes="body-text"
+                                                       FontSize="12"
+                                                       IsVisible="{Binding HasDetails}"
+                                                       Text="{Binding Details}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       ToolTip.Tip="{Binding Details}" />
+                                        </Grid>
+                                        <Grid Grid.Row="2"
+                                              Grid.Column="1"
+                                              ColumnDefinitions="Auto,*"
+                                              ColumnSpacing="5"
+                                              IsVisible="{Binding HasDestination}">
+                                            <TextBlock Classes="body-text"
+                                                       FontSize="12"
+                                                       Text="→" />
+                                            <TextBlock Grid.Column="1"
+                                                       Classes="body-text"
+                                                       FontSize="12"
+                                                       Text="{Binding Destination}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       ToolTip.Tip="{Binding Destination}" />
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
-
 </Window>

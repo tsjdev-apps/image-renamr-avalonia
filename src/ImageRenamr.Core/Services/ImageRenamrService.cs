@@ -57,7 +57,7 @@ public sealed class ImageRenamrService : IImageRenamrService
 
         _ = Directory.CreateDirectory(outputFolder);
 
-        progress?.Report(new RenameProgressUpdate(0, 0, "Scanning the input folder for supported image files."));
+        progress?.Report(new RenameProgressUpdate(0, 0, RenameProgressStatus.Scanning));
 
         List<string> sourceFiles = [.. Directory
             .EnumerateFiles(inputFolder, "*", SearchOption.TopDirectoryOnly)
@@ -66,7 +66,7 @@ public sealed class ImageRenamrService : IImageRenamrService
 
         if (sourceFiles.Count == 0)
         {
-            progress?.Report(new RenameProgressUpdate(0, 0, "No supported image files were found in the input folder."));
+            progress?.Report(new RenameProgressUpdate(0, 0, RenameProgressStatus.NoFiles));
             return new RenameImagesResult(0, 0, 0, []);
         }
 
@@ -91,23 +91,51 @@ public sealed class ImageRenamrService : IImageRenamrService
                 progress?.Report(new RenameProgressUpdate(
                     processedCount,
                     sourceFiles.Count,
-                    $"Skipped '{destinationFileName}' because it already exists in the output folder."));
+                    RenameProgressStatus.Skipped,
+                    Path.GetFileName(sourceFile),
+                    destinationFileName,
+                    RenameFailureReason.TargetExists));
                 continue;
             }
 
-            await CopyAsync(sourceFile, destinationFilePath, request.OverwriteExisting, cancellationToken);
+            try
+            {
+                await CopyAsync(sourceFile, destinationFilePath, request.OverwriteExisting, cancellationToken);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                progress?.Report(new RenameProgressUpdate(
+                    processedCount,
+                    sourceFiles.Count,
+                    RenameProgressStatus.Failed,
+                    Path.GetFileName(sourceFile),
+                    destinationFileName,
+                    RenameFailureReason.AccessDenied));
+                throw;
+            }
+            catch (IOException)
+            {
+                progress?.Report(new RenameProgressUpdate(
+                    processedCount,
+                    sourceFiles.Count,
+                    RenameProgressStatus.Failed,
+                    Path.GetFileName(sourceFile),
+                    destinationFileName,
+                    RenameFailureReason.FileSystemError));
+                throw;
+            }
 
             copiedFiles++;
             outputFiles.Add(destinationFilePath);
 
-            string action = request.OverwriteExisting && destinationExistsBeforeCopy
-                ? "Saved"
-                : "Copied";
-
             progress?.Report(new RenameProgressUpdate(
                 processedCount,
                 sourceFiles.Count,
-                $"{action} '{destinationFileName}' from '{Path.GetFileName(sourceFile)}'."));
+                request.OverwriteExisting && destinationExistsBeforeCopy
+                    ? RenameProgressStatus.Overwritten
+                    : RenameProgressStatus.Renamed,
+                Path.GetFileName(sourceFile),
+                destinationFileName));
         }
 
         return new RenameImagesResult(sourceFiles.Count, copiedFiles, skippedFiles, outputFiles);
